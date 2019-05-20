@@ -1,10 +1,9 @@
 package KNNmethods;
-import MnistDB.Model.MnistItem;
-import MnistDB.Model.RepositoryMnist;
+import MnistRepository.RepositoryMnist;
 
-public class MetricsMethods {
+final class MetricsMethods {
 
-  public static double EuqlidDistance(RepositoryMnist db, int index1, int index2) {
+  static double EuqlidDistance(RepositoryMnist db, int index1, int index2) {
     double distance = 0;
     for (int i = 0; i < db.getImage(index1).length; i++) {
       distance += Math.pow(db.getImage(index1)[i] - db.getImage(index2)[i], 2);
@@ -13,7 +12,7 @@ public class MetricsMethods {
     return distance;
   }
 
-  public static double CityDistrictDistance(RepositoryMnist db, int index1, int index2) {
+  static double CityDistrictDistance(RepositoryMnist db, int index1, int index2) {
     double distance = 0;
     for (int i = 0; i < db.getImage(index1).length; i++) {
       distance += Math.abs(db.getImage(index1)[i] - db.getImage(index2)[i]);
@@ -21,7 +20,7 @@ public class MetricsMethods {
     return distance;
   }
 
-  public static double VectorsAngleDistance(RepositoryMnist db, int index1, int index2) {
+  static double VectorsAngleDistance(RepositoryMnist db, int index1, int index2) {
     double multiplySclar = 0;
     double modulItem1 = 0;
     double modulItem2 = 0;

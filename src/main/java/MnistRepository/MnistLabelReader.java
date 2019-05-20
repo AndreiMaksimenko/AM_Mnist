@@ -1,6 +1,4 @@
-package MnistDB;
-
-import MnistDB.Model.RepositoryMnist;
+package MnistRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +14,7 @@ public class MnistLabelReader implements Iterator {
   private ArrayList<Integer> mnistData;
   private ListIterator labelsIterator;
 
-  public MnistLabelReader(RepositoryMnist db, String fileName) {
+  MnistLabelReader(String fileName) {
     this.fileName = fileName;
     this.mnistData = new ArrayList<Integer>();
     ReadFile();

@@ -1,4 +1,4 @@
-package MnistDB.Model;
+package MnistRepository;
 
 public class MnistItem {
 

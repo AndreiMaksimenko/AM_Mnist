@@ -1,44 +1,46 @@
-package MnistDB.Model;
+package MnistRepository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RepositoryMnist implements Iterator {
-  ArrayList<MnistItem> data;
-  Iterator dataIterator;
+  private ArrayList<MnistItem> data;
+  private Iterator dataIterator;
+  private MnistLabelReader labelReader;
+  private MnistImageReader imageReader;
 
-  public RepositoryMnist() {
+  public RepositoryMnist (String images, String labels){
     data = new ArrayList<>();
     dataIterator = data.listIterator();
+    ReadImages(images);
+    ReadLabels(labels);
   }
 
-  public void newItemWithValue(int value) {
-    MnistItem item = new MnistItem();
-    item.setValue(value);
-    data.add(item);
-  }
 
-  public void newItemWithImage(int[] value) {
-    MnistItem item = new MnistItem();
-    item.setImage(value);
-    data.add(item);
-  }
+  private void ReadLabels(String labels){
+    labelReader = new MnistLabelReader(labels);
+    int counter = 0;
+    while (labelReader.hasNext()){
+      int value = (int) labelReader.next();
+      try {
+        data.get(counter).setValue(value);
+      } catch (Exception ex) {
+        System.out.println("No element: " + counter);
+      }
+      counter++;
+    }}
 
-  public void addValue(int itemNumber, int value) {
-    try {
-      data.get(itemNumber).setValue(value);
-    } catch (Exception ex) {
-      System.out.println("No element: " + itemNumber);
-    }
-  }
 
-  public void addImage(int itemNumber, int[] image) {
-    try {
-      data.get(itemNumber).setImage(image);
-    } catch (Exception ex) {
-      System.out.println("No element: " + itemNumber);
-    }
-  }
+  private void ReadImages(String images) {
+    imageReader = new MnistImageReader(images);
+    while (imageReader.hasNext()){
+      int[] image = (int[]) imageReader.next();
+      MnistItem item = new MnistItem();
+      item.setImage(image);
+      data.add(item);
+        }
+     }
+
 
   public int[] getImage(int itemNumber) {
     try {
@@ -94,6 +96,12 @@ public class RepositoryMnist implements Iterator {
   public MnistItem getItem(int index){
       return data.get(index);
   }
+
+  public void getLabelsData()
+  {
+    labelReader.getDataValues();
+  }
+  public void getImagesData(){imageReader.getDataValues();}
 
   @Override
   public boolean hasNext() {

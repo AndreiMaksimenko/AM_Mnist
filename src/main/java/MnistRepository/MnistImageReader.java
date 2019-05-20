@@ -1,6 +1,4 @@
-package MnistDB;
-
-import MnistDB.Model.RepositoryMnist;
+package MnistRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +16,7 @@ public class MnistImageReader implements Iterator {
   private ArrayList<Integer> mnistData;
   private ListIterator imagesIterator;
 
-  public MnistImageReader(RepositoryMnist db, String fileName) {
+  MnistImageReader(String fileName) {
     this.fileName = fileName;
     this.mnistData = new ArrayList<Integer>();
     ReadFile();
