@@ -2,12 +2,9 @@ package KNNmethods;
 
 import MnistRepository.RepositoryMnist;
 import MnistRepository.MnistItem;
-
 import java.util.*;
 
 public class KnnFinder {
-
-
   private int ImageRecogniser(RepositoryMnist db, int imageIndex, int qntyNeibors, int method) {
 
     Map<Double, Integer> resultsOfKnn = new TreeMap<Double, Integer>();

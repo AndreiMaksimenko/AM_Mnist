@@ -31,8 +31,8 @@ final class MetricsMethods {
       modulItem1 += db.getImage(index1)[i] * db.getImage(index1)[i];
       modulItem2 += db.getImage(index2)[i] * db.getImage(index2)[i];
     }
-    distance = multiplySclar / Math.sqrt(modulItem1 * modulItem2);
-    return Math.acos(distance);
+    distance = Math.acos(multiplySclar / Math.sqrt(modulItem1 * modulItem2));
+    return distance;
   }
 
 
