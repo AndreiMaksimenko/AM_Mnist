@@ -18,7 +18,7 @@ public class MnistImageReader implements Iterator {
 
   MnistImageReader(String fileName) {
     this.fileName = fileName;
-    this.mnistData = new ArrayList<Integer>();
+    this.mnistData = new ArrayList<>();
     ReadFile();
     imagesIterator = mnistData.listIterator();
   }
@@ -35,9 +35,11 @@ public class MnistImageReader implements Iterator {
       fin.read(b);
       qntyColumns = toInt(b);
       int count = 0;
-      int i = -1;
+//      int i = -1;
+      int i;
      while ((i=fin.read())!=-1){
-       mnistData.add(i= i & 0xff);
+       //mnistData.add(i= i & 0xff);
+       mnistData.add(i & 0xff);
      }
     }
     catch (IOException ex){
@@ -55,11 +57,14 @@ public class MnistImageReader implements Iterator {
 
   }
 
-  public void getDataValues(){
+  void getDataValues(){
     System.out.println("Magic number: "+magicNumber);
     System.out.println("Rows: "+qntyRows);
     System.out.println("Columns: "+qntyColumns);
     System.out.println("Quantity: " + qntyOfData);
+  }
+  int GetImageSize(){
+    return qntyColumns*qntyRows;
   }
 
   @Override
@@ -69,8 +74,8 @@ public class MnistImageReader implements Iterator {
 
   @Override
   public Object next() {
-    int [] values = new int [784];
-      for (int i = 0; i < 784; i++) {values[i] = (Integer) imagesIterator.next();}
+    double [] values = new double[784];
+      for (int i = 0; i < 784; i++) {values[i] = (Double) imagesIterator.next();}
     return values;
    }
 }

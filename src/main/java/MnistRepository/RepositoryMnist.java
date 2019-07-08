@@ -34,7 +34,7 @@ public class RepositoryMnist implements Iterator {
   private void ReadImages(String images) {
     imageReader = new MnistImageReader(images);
     while (imageReader.hasNext()){
-      int[] image = (int[]) imageReader.next();
+      double [] image = (double[])imageReader.next();
       MnistItem item = new MnistItem();
       item.setImage(image);
       data.add(item);
@@ -42,7 +42,7 @@ public class RepositoryMnist implements Iterator {
      }
 
 
-  public int[] getImage(int itemNumber) {
+  public double[] getImage(int itemNumber) {
     try {
       return data.get(itemNumber).getImage();
     } catch (Exception ex) {
@@ -61,14 +61,14 @@ public class RepositoryMnist implements Iterator {
   }
 
   public void printImage(int number) {
-    int [] values = getImage(number);
+    double [] values = getImage(number);
     int counter = 0;
     for (int i = 0; i < 28; i++) {
       StringBuilder str = new StringBuilder();
       String simbl;
       for (int j = 0; j < 28; j++) {
         {
-          int value = values[counter];
+          double value = values[counter];
           if (value == 0) {
             simbl = " ";
           } else if (value > 200) {
@@ -102,6 +102,7 @@ public class RepositoryMnist implements Iterator {
     labelReader.getDataValues();
   }
   public void getImagesData(){imageReader.getDataValues();}
+  public int getSizeOfImage(){return imageReader.GetImageSize();}
 
   @Override
   public boolean hasNext() {

@@ -3,8 +3,7 @@ package MnistRepository;
 public class MnistItem {
 
   private int value;
-  private int calculation;
-  private int[] image = new int[784];
+  private double[] image = new double[784];
 
   MnistItem() {
   }
@@ -13,7 +12,7 @@ public class MnistItem {
     return value;
   }
 
-  int[] getImage() {
+  double[] getImage() {
     return image;
   }
 
@@ -21,7 +20,7 @@ public class MnistItem {
     this.value = value;
   }
 
-  void setImage(int[] image) {
+  void setImage(double[] image) {
     this.image = image;
   }
 
