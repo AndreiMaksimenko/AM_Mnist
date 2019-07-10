@@ -13,7 +13,7 @@ public class MnistImageReader implements Iterator {
   private int qntyRows;
   private int qntyColumns;
   private String fileName;
-  private ArrayList<Integer> mnistData;
+  private ArrayList<Double> mnistData;
   private ListIterator imagesIterator;
 
   MnistImageReader(String fileName) {
@@ -39,7 +39,7 @@ public class MnistImageReader implements Iterator {
       int i;
      while ((i=fin.read())!=-1){
        //mnistData.add(i= i & 0xff);
-       mnistData.add(i & 0xff);
+       mnistData.add((double)(i & 0xff));
      }
     }
     catch (IOException ex){

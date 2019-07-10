@@ -11,9 +11,6 @@ public class KnnFinder {
     for (int i = 0; i < db.getSize(); i++) {
       MnistItem item2 = db.getItem(i);
       switch (method) {
-        case 1:
-          resultsOfKnn.put(MetricsMethods.EuqlidDistance(db,imageIndex, i), db.getValue(i));
-          break;
         case 2:
           resultsOfKnn.put(MetricsMethods.CityDistrictDistance(db,imageIndex, i), db.getValue(i));
           break;

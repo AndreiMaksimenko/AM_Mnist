@@ -4,9 +4,9 @@ package NeuralNetwork;
 class OutputLayer implements NNLayer {
 
   private int label;
-  private double[] inputSignals; //Входящие сигналы по поличеству нейронов на предыдущем слое
-  private double[] errors; //ошибки выходов
-  private double[] answers; //массив правильного ответа
+  private double[] inputSignals =new double[10]; //Входящие сигналы по поличеству нейронов на предыдущем слое
+  private double[] errors = new double[10]; //ошибки выходов
+  private double[] answers = new double[10]; //массив правильного ответа
 
 
   /**
@@ -15,33 +15,46 @@ class OutputLayer implements NNLayer {
    **/
 
 
-
   void setLabel(int label) {
     this.label = label;
-    answers = new double[10];
-    for (int i = 0; i<answers.length; i++) {
-      answers[i] = i == label ?  1 : 0;
+    // answers = new double[10];
+    for (int i = 0; i < answers.length; i++) {
+      answers[i] = i == label ? 1 : 0;
     }
+
   }
 
 
   /**
    * Возвращает правильный ответ
    **/
-  public int getLabel() {
+  int getLabel() {
     return label;
   }
 
 
   /**
    * Пересчитывает ошибки в этом слое изходя из матрицы правильного ответа answers
+   **/
+  private void ReCalcPropagationErrors() {
+    for (int i = 0; i < inputSignals.length; i++) {
+      this.errors[i] = NetCalc.EndNeuronError(answers[i], inputSignals[i]);
+    }
+
+//    for (int i = 0; i < inputSignals.length; i++) {
+//      errors[i] = (answers[i] - inputSignals[i]) * ((1 - inputSignals[i]) * inputSignals[i]);
+//    }
+    //return errors;
+  }
+
+
+  /**
    * Возвращает ошибки для предыдущего слоя
    **/
+
   @Override
-  public double[] GetPropagationErrors() {
-    for (int i = 0; i<inputSignals.length; i++){
-    errors[i] = answers[i]-inputSignals[i];
-    }
+  public double[] GetErrors() {
+    ReCalcPropagationErrors();
     return errors;
   }
 
@@ -54,7 +67,6 @@ class OutputLayer implements NNLayer {
   public double[] GetOutputSignals() {
     return inputSignals;
   }
-
 
 
   /**
@@ -78,21 +90,36 @@ class OutputLayer implements NNLayer {
   }
 
 
+  int getResult() {
+    double max = inputSignals[0];
+    int maxIndx = 0;
+    for (int i = 0; i < inputSignals.length; i++) {
+      if (inputSignals[i] > max) {
+        max = inputSignals[i];
+        maxIndx = i;
+      }
+    }
 
-
-
-
-
-  //ХЛАААМММ!!!!!!!!!!!!!
-
-
-  /**
-   * Артефактный метод
-   * разберись и  удали !!!
-   **/
-
-  @Override
-  public void setForwardLayer(NNLayer forwardLayer) {
-
+    return maxIndx;
   }
+
+  public String toString() {
+    StringBuilder x = new StringBuilder();
+    for (int i = 0; i < inputSignals.length; i++) {
+      x.append("Index: ").append(i).append(": ").append(inputSignals[i]).append("; ");
+    }
+    return x.toString();
+  }
+
+  String MSEPrint() {
+    StringBuilder sb = new StringBuilder();
+    double errorMSE = 0;
+    for (int i = 0; i < answers.length; i++) {
+      errorMSE += (answers[i] - inputSignals[i]) * (answers[i] - inputSignals[i]);
+    }
+    errorMSE = errorMSE / answers.length;
+    sb.append(errorMSE);
+    return sb.toString();
+  }
+
 }

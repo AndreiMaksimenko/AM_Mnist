@@ -5,7 +5,7 @@ class InputLayer implements NNLayer {
 
 
   private double[] outputSignals;
-  // private NNLayer forwardLayer;
+  //private NNLayer forwardLayer;
 
 
   /**
@@ -61,15 +61,6 @@ class InputLayer implements NNLayer {
   /* ХЛАААМ!!!*/
 
 
-  /**
-   * Артефактный метод
-   * разберись и  удали !!!
-   **/
-
-  @Override
-  public void setForwardLayer(NNLayer forwardLayer) {
-
-  }
 
 
 
@@ -78,9 +69,10 @@ class InputLayer implements NNLayer {
    * разберись и  удали !!!
    **/
 
+
   @Override
-  public double[] GetPropagationErrors()
-  {
+  public double[] GetErrors() {
+
     return null;
   }
 

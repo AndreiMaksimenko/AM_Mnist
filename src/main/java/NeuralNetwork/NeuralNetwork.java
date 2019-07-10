@@ -2,7 +2,6 @@ package NeuralNetwork;
 
 import MnistRepository.RepositoryMnist;
 
-import java.util.Arrays;
 
 public class NeuralNetwork {
   private double learningRate;
@@ -10,7 +9,6 @@ public class NeuralNetwork {
   private OutputLayer outputLayer;
   private int[] hiddenLayers;
   private HiddenLayer[] layersOfNN;
-  private RepositoryMnist db;
 
 
   /**
@@ -31,7 +29,6 @@ public class NeuralNetwork {
   private void CreateNeuralNetwork() {
 
     this.inputLayer = new InputLayer();
-
     this.layersOfNN = new HiddenLayer[hiddenLayers.length+1];
     for (int i = 0; i < hiddenLayers.length; i++) {
       if (i == 0) {
@@ -61,32 +58,30 @@ public class NeuralNetwork {
     for (int x = 0; x < epoch; x++) {
       for (int imageIndex = 0; imageIndex < db.getSize(); imageIndex++) {
 
-        inputLayer.setSignals(db.getImage(imageIndex));
-        outputLayer.setLabel(db.getValue(imageIndex));
+        inputLayer.setSignals(db.getImage(imageIndex));  //Задаем входящее изображение
+        outputLayer.setLabel(db.getValue(imageIndex)); //Задаем правильный ответ
 
 
                 layersOfNN[0].setSignals(inputLayer.GetOutputSignals());
                 for (int i = 1; i < layersOfNN.length; i++) {
                   layersOfNN[i].setSignals(layersOfNN[i - 1].GetOutputSignals());
                 }
-                outputLayer.setSignals(layersOfNN[ layersOfNN.length - 1].GetOutputSignals());
+                outputLayer.setSignals(layersOfNN[layersOfNN.length - 1].GetOutputSignals());
 
-
-//        for (HiddenLayer hiddenLayer : layersOfNN) {
-//          hiddenLayer.setSignals(hiddenLayer.getBackLayer.GetOutputSignals());
-//        }
-//        outputLayer.setSignals(outputLayer.getBackLayer.GetOutputSignals());
 
 
 
         for (int j = layersOfNN.length; j > 0; j--) {
-          layersOfNN[j].SetLayerErrors();
+          layersOfNN[j-1].SetLayerErrors();
         }
 
-        for (int k = layersOfNN.length; k > 0; k--) {
-          layersOfNN[k].ChangeWeights();
+
+
+        for (HiddenLayer hiddenLayer : layersOfNN) {
+          hiddenLayer.ChangeWeights();
         }
 
+        System.out.print("\rComplited "+imageIndex + "   epoch: " +  x + "   MSError :" + outputLayer.MSEPrint());
       }
     }
   }
@@ -96,16 +91,17 @@ public class NeuralNetwork {
 
     inputLayer.setSignals(db.getImage(imgIndex));
     outputLayer.setLabel(db.getValue(imgIndex));
+
     layersOfNN[0].setSignals(inputLayer.GetOutputSignals());
-
     for (int i = 1; i < layersOfNN.length; i++) {
-      layersOfNN[i].setSignals(layersOfNN[i + 1].GetOutputSignals());
+      layersOfNN[i].setSignals(layersOfNN[i - 1].GetOutputSignals());
     }
-
     outputLayer.setSignals(layersOfNN[layersOfNN.length - 1].GetOutputSignals());
 
-    String s = Arrays.toString(outputLayer.GetOutputSignals());
-    System.out.print("Результат по тестированию: " + s);
+    String s = outputLayer.toString();
+    System.out.println("\n" + "Результат по тестированию: " + s);
+    System.out.println("Масимум: "+outputLayer.getResult());
+    System.out.println("Правильный ответ:" + outputLayer.getLabel());
 
   }
 
