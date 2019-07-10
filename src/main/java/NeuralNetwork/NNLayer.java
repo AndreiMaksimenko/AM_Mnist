@@ -2,7 +2,7 @@ package NeuralNetwork;
 
 interface NNLayer {
   //void ReCalcPropagationErrors();  //убрать из интерфейса
-  double[] GetErrors();
+  double[] GetErrorsForBackLayer();
   double[] GetOutputSignals();
   int GetLength();
   //  void setForwardLayer(NNLayer forwardLayer); //убрать из интерфейса

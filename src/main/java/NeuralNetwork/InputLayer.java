@@ -2,19 +2,24 @@ package NeuralNetwork;
 
 
 class InputLayer implements NNLayer {
-
-
   private double[] outputSignals;
-  //private NNLayer forwardLayer;
 
 
   /**
-   * Конструктор, задаст длину 784
+   * Конструктор по умолчанию, задаст длину 784
    * чтобы при создании всей сети вышла правильная архитектура
    **/
 
   InputLayer() {
     this.outputSignals = new double[784];
+  }
+
+  /**
+   * Конструктор не по умолчанию, с установленно длинной входящего сигнала
+   * чтобы при создании всей сети вышла правильная архитектура
+   **/
+  InputLayer(int size){
+    this.outputSignals = new double[size];
   }
 
 
@@ -27,9 +32,9 @@ class InputLayer implements NNLayer {
 
   @Override
   public void setSignals(double[] signals) {
-    this.outputSignals = signals;
+//    this.outputSignals = signals;
     for(int i = 0; i<outputSignals.length; i++){
-      this.outputSignals[i]=outputSignals[i]/256;
+      outputSignals[i]=signals[i]/256;
     }
   }
 
@@ -60,10 +65,6 @@ class InputLayer implements NNLayer {
 
   /* ХЛАААМ!!!*/
 
-
-
-
-
   /**
    * Артефактный метод
    * разберись и  удали !!!
@@ -71,7 +72,7 @@ class InputLayer implements NNLayer {
 
 
   @Override
-  public double[] GetErrors() {
+  public double[] GetErrorsForBackLayer() {
 
     return null;
   }

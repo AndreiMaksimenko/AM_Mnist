@@ -53,7 +53,7 @@ class OutputLayer implements NNLayer {
    **/
 
   @Override
-  public double[] GetErrors() {
+  public double[] GetErrorsForBackLayer() {
     ReCalcPropagationErrors();
     return errors;
   }
@@ -117,8 +117,9 @@ class OutputLayer implements NNLayer {
     for (int i = 0; i < answers.length; i++) {
       errorMSE += (answers[i] - inputSignals[i]) * (answers[i] - inputSignals[i]);
     }
-    errorMSE = errorMSE / answers.length;
-    sb.append(errorMSE);
+    errorMSE = (errorMSE / answers.length)*100;
+    String s = String.format("%.3f", errorMSE);
+    sb.append(s).append("%");
     return sb.toString();
   }
 

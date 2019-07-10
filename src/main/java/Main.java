@@ -22,11 +22,21 @@ public class Main {
 //    KnnFinder finder = new KnnFinder();
 //    finder.knnFind(db,500,5,3);
 
-    int[] neurons = {50,15};
-    NeuralNetwork nn = new NeuralNetwork(0.7, neurons);
-    nn.trainNetwork(db,100);
-    nn.testNetwork(db, 33);
+    int[] neurons = {151,73};
+    NeuralNetwork nn = new NeuralNetwork(0.07, neurons);
+    nn.trainNetwork(db,5);
 
+
+//    imageFile = "f:\\JAVA\\AM_Mnist\\src\\main\\resources\\train-images.idx3-ubyte";
+//    labelFile = "f:\\JAVA\\AM_Mnist\\src\\main\\resources\\train-labels.idx1-ubyte";
+//
+//    System.out.print("\nData loading...");
+//    db = new RepositoryMnist(imageFile,labelFile);
+//    System.out.println("Complite");
+//    db.getImagesData();
+//    db.getLabelsData();
+
+      nn.testNetwork(db);
 
 
 

@@ -8,7 +8,7 @@ class HiddenLayer implements NNLayer {
   private double[][] inputWeights; //Веса на все входящие ребра
   private int neurons; // количество нейронов этого слоя
   private double[] errors; //ошибки этого слоя
-  private double[] errorsForBackLayer; //ошибки предыдущего слоя
+  private double[] errorsForBackLayer; //ошибки для предыдущего слоя
   private NNLayer forwardLayer;
   private NNLayer backLayer;
   private double learningRate;
@@ -26,6 +26,7 @@ class HiddenLayer implements NNLayer {
 
   /**
    * Задает рандомно веса при первом создании слоя
+   * от -1 до 1
    **/
   private void SetWeightsForFistTime() {
     this.inputWeights = new double[backLayer.GetLength()][this.GetLength()];
@@ -85,17 +86,15 @@ class HiddenLayer implements NNLayer {
 
 
   /**
-   * Возвращает ошибки для предыдущего слоя
+   * Пересчитывает ошибки для предыдущего слоя
    **/
 
   private void ReCalcPropagationErrors() {
-    errorsForBackLayer = new double[backLayer.GetLength()];
+    this.errorsForBackLayer = new double[backLayer.GetLength()];
     for (int output = 0; output < backLayer.GetLength(); output++) {
       errorsForBackLayer[output] = NetCalc.HiddenNeuronError(errors, inputWeights[output], inputSignals[output]);
     }
-
-
-//this.SetLayerErrors();
+//this.ChangeErrorsAndWeights();
 //    for (int i = 0; i < propagationErrors.length; i++) {
 //      for (int j = 0; j < neurons; j++) {
 //        propagationErrors[i] += inputWeights[i][j] * errors[j];
@@ -107,8 +106,11 @@ class HiddenLayer implements NNLayer {
 
   }
 
+  /**
+   * Вызывает пересчёт ошибок и возвращает их для предыдущего слоя
+   **/
   @Override
-  public double[] GetErrors() {
+  public double[] GetErrorsForBackLayer() {
     ReCalcPropagationErrors();
     return errorsForBackLayer;
   }
@@ -117,29 +119,30 @@ class HiddenLayer implements NNLayer {
   /**
    * Получить ощибки со следующего слоя и задаст в этом слое
    **/
-  void SetLayerErrors() {
-    this.errors = forwardLayer.GetErrors();
+  void ChangeErrorsAndWeights() {
+    this.errors = forwardLayer.GetErrorsForBackLayer();
+    this.inputWeights= NewWeights(inputWeights, errors, inputSignals, learningRate);
   }
 
 
-  /**
-   * Пересчитать веса в этом слое
-   * Делается только после коррекции ошибок
-   **/
+//  /**
+//   * Пересчитать веса в этом слое
+//   * Делается только после коррекции ошибок
+//   **/
 
-  void ChangeWeights() //Изменит веса
-  {
-    this.inputWeights= NewWeights(this.inputWeights, errors, inputSignals, learningRate);
-
-
-    ////    double[] signals = this.GetOutputSignals();
+//  void ChangeWeights() //Изменит веса
+//  {
+//    this.inputWeights= NewWeights(inputWeights, errors, inputSignals, learningRate);
 //
-//    for (int i = 0; i < inputSignals.length; i++) {
-//      for (int j = 0; j < neurons; j++) {
-//        inputWeights[i][j] = inputWeights[i][j] + errors[j] * inputSignals[i] * learningRate; //ошибка
-//      }
-//    }
-  }
+//
+//    ////    double[] signals = this.GetOutputSignals();
+////
+////    for (int i = 0; i < inputSignals.length; i++) {
+////      for (int j = 0; j < neurons; j++) {
+////        inputWeights[i][j] = inputWeights[i][j] + errors[j] * inputSignals[i] * learningRate; //ошибка
+////      }
+////    }
+//  }
 
 
 }
